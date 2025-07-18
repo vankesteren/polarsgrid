@@ -1,0 +1,19 @@
+[project]
+name = "polarsgrid"
+version = "0.1.0"
+description = "Expand grid functionality using Polars"
+readme = "README.md"
+authors = [
+    { name = "Erik-Jan van Kesteren", email = "erikjanvankesteren@pm.me" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "polars>=1.31.0",
+]
+
+[tool.ruff]
+line-length=100
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
