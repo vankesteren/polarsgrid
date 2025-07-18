@@ -1,0 +1,21 @@
+name: Continuous integration
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Lint using ruff"
+        uses: astral-sh/ruff-action@v3
+  build: 
+    name: Build package
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Set up uv"
+        uses: astral-sh/setup-uv@v6
+      - name: "Build using uv"
+        run: uv build
