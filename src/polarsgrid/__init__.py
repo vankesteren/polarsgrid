@@ -1,6 +1,9 @@
 import polars as pl
 
-def expand_grid(_lazy=False, _categorical=False, **kwargs: list) -> pl.DataFrame | pl.LazyFrame:
+
+def expand_grid(
+    _lazy=False, _categorical=False, _row_id=False, **kwargs: list
+) -> pl.DataFrame | pl.LazyFrame:
     """
     Create a Cartesian product (grid) of input lists as a Polars DataFrame or LazyFrame.
 
@@ -12,8 +15,9 @@ def expand_grid(_lazy=False, _categorical=False, **kwargs: list) -> pl.DataFrame
         _lazy (bool, default=False): If True, return a Polars LazyFrame instead of a DataFrame.
                                      This is recommended for large input lists where the full
                                      Cartesian product may exceed memory limits.
-        _categorical (bool, default=False): If True, convert string columns to pl.Categorical 
+        _categorical (bool, default=False): If True, convert string columns to pl.Categorical
                                             data type.
+        _row_id (bool, default=False): If True, add a column "row_id" at the start.
         **kwargs (list): Named input lists to form the grid. Each key becomes a column name.
                          All values must be of type `list`.
 
@@ -22,7 +26,7 @@ def expand_grid(_lazy=False, _categorical=False, **kwargs: list) -> pl.DataFrame
                                      with a `row_id` column as a unique identifier for each row.
 
     Raises:
-        ValueError: If any keyword is named 'row_id'.
+        ValueError: If row ids are requested and any keyword arg is named 'row_id'.
         TypeError: If any value in kwargs is not a list.
 
     Notes:
@@ -32,20 +36,20 @@ def expand_grid(_lazy=False, _categorical=False, **kwargs: list) -> pl.DataFrame
     Example:
         >>> from polarsgrid import expand_grid
         >>> expand_grid(a=[1, 2], b=["x", "y"])
-        shape: (4, 3)
-        ┌────────┬─────┬─────┐
-        │ __id__ ┆ a   ┆ b   │
-        │ ---    ┆ --- ┆ --- │
-        │ i64    ┆ i64 ┆ str │
-        ╞════════╪═════╪═════╡
-        │ 0      ┆ 1   ┆ x   │
-        │ 1      ┆ 2   ┆ x   │
-        │ 2      ┆ 1   ┆ y   │
-        │ 3      ┆ 2   ┆ y   │
-        └────────┴─────┴─────┘
+        shape: (4, 2)
+        ┌─────┬─────┐
+        │ a   ┆ b   │
+        │ --- ┆ --- │
+        │ i64 ┆ str │
+        ╞═════╪═════╡
+        │ 1   ┆ x   │
+        │ 2   ┆ x   │
+        │ 1   ┆ y   │
+        │ 2   ┆ y   │
+        └─────┴─────┘
     """
 
-    if any(k == "row_id" for k in kwargs):
+    if _row_id and any(k == "row_id" for k in kwargs):
         raise ValueError("Keyword arguments are not allowed to be named 'row_id'")
     if not all([isinstance(v, list) for v in kwargs.values()]):
         raise TypeError("All keyword arguments should be of type 'list.")
@@ -60,13 +64,18 @@ def expand_grid(_lazy=False, _categorical=False, **kwargs: list) -> pl.DataFrame
     for k in reversed(kwargs):
         ldf = ldf.explode(pl.col(k))
 
-    # convert str columns to categorical
     if _categorical:
+        # convert str columns to categorical
         ldf = ldf.with_columns(pl.selectors.string().cast(pl.Categorical))
 
-    # add id at the start
-    ldf = ldf.with_columns(pl.int_range(nrow).alias("row_id")).select(
-        pl.col.row_id, pl.exclude("row_id")
-    )
+    if _row_id:
+        # add id at the start
+        ldf = ldf.with_columns(pl.int_range(nrow).alias("row_id")).select(
+            pl.col.row_id, pl.exclude("row_id")
+        )
 
-    return ldf if _lazy else ldf.collect()
+    if _lazy:
+        # return lazy
+        return ldf
+
+    return ldf.collect()

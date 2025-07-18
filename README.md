@@ -25,17 +25,17 @@ from polarsgrid import expand_grid
 expand_grid(a=[1, 2], b=["x", "y"])
 ```
 ```
-shape: (4, 3)
-┌────────┬─────┬─────┐
-│ row_id ┆ a   ┆ b   │
-│ ---    ┆ --- ┆ --- │
-│ i64    ┆ i64 ┆ str │
-╞════════╪═════╪═════╡
-│ 0      ┆ 1   ┆ x   │
-│ 1      ┆ 2   ┆ x   │
-│ 2      ┆ 1   ┆ y   │
-│ 3      ┆ 2   ┆ y   │
-└────────┴─────┴─────┘
+shape: (4, 2)
+┌─────┬─────┐
+│ a   ┆ b   │
+│ --- ┆ --- │
+│ i64 ┆ str │
+╞═════╪═════╡
+│ 1   ┆ x   │
+│ 2   ┆ x   │
+│ 1   ┆ y   │
+│ 2   ┆ y   │
+└─────┴─────┘
 ```
 
 Note that the first argument iteratest fastest, and the last argument iterates slowest in the cartesian product.
@@ -52,7 +52,7 @@ lgrid = expand_grid(
 lgrid.sink_parquet("grid.parquet")
 ```
 
-Additionally, for certain operations it might be nice to return the string columns as a categorical data type:
+Additionally, for certain operations it might be nice to return the string columns as a categorical data type, and to add a row id:
 
 ```py
 expand_grid(
@@ -60,6 +60,7 @@ expand_grid(
     color=["red", "green", "blue"], 
     check=[True, False], 
     _categorical=True,
+    _row_id=True,
 )
 ```
 ```
