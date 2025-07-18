@@ -1,12 +1,19 @@
 # Polarsgrid
 
+[![Continuous integration](https://github.com/vankesteren/polarsgrid/actions/workflows/main.yml/badge.svg)](https://github.com/vankesteren/polarsgrid/actions/workflows/main.yml) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/polarsgrid)
+
 Tidyverse-style [`expand_grid()`](https://tidyr.tidyverse.org/reference/expand_grid.html) in a fast and efficient way using [Polars](https://pola.rs).
 
 ## Installation 
 
-This package is not on pypi (yet), so install it as follows:
+Install the package as follows:
 ```sh
-pip install git+https://github.com/vankesteren/polarsgrid
+pip install polarsgrid
+```
+
+or add it to your project using [uv](https://docs.astral.sh/uv) as follows:
+```sh
+uv add polarsgrid
 ```
 
 ## Usage

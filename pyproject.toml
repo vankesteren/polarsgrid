@@ -7,9 +7,21 @@ authors = [
     { name = "Erik-Jan van Kesteren", email = "erikjanvankesteren@pm.me" }
 ]
 requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
 dependencies = [
     "polars>=1.31.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/vankesteren/polarsgrid"
+Issues = "https://github.com/vankesteren/polarsgrid/issues"
 
 [tool.ruff]
 line-length=100
