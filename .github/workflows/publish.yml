@@ -1,0 +1,24 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish: 
+    name: Build and publish package
+    runs-on: "ubuntu-latest"
+    environment:
+      name: pypi
+      url: https://pypi.org/p/polarsgrid  # Replace <package-name> with your PyPI project name
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+    steps:
+      - name: "Checkout project"
+        uses: actions/checkout@v4
+      - name: "Set up uv"
+        uses: astral-sh/setup-uv@v6
+      - name: "Build using uv"
+        run: uv build
+      - name: "Upload to PyPI"
+        uses: pypa/gh-action-pypi-publish@release/v1
