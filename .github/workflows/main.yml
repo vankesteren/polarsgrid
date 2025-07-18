@@ -8,25 +8,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  checkout:
-    name: Checkout
-    runs-on: "ubuntu-latest"
-    steps:
-      - name: "Checkout project"
-        uses: actions/checkout@v4
   lint:
     name: Lint
     runs-on: "ubuntu-latest"
     steps:
+      - name: "Checkout project"
+        uses: actions/checkout@v4
       - name: "Lint using ruff"
         uses: astral-sh/ruff-action@v3
-    needs: checkout
   build: 
     name: Build package
     runs-on: "ubuntu-latest"
     steps:
+      - name: "Checkout project"
+        uses: actions/checkout@v4
       - name: "Set up uv"
         uses: astral-sh/setup-uv@v6
       - name: "Build using uv"
         run: uv build
-    needs: checkout
