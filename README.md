@@ -43,11 +43,11 @@ Note that the first argument iteratest fastest, and the last argument iterates s
 Should the grid become too big to hold in memory, you can choose to return a lazy table which can be stored on a disk efficiently:
 
 ```py
-lgrid = expand_grid(
+from polarsgrid import expand_grid_lazy
+lgrid = expand_grid_lazy(
     sample_size=list(range(1000)), 
     condition=["a", "b", "c"], 
     iteration=list(range(500)), 
-    _lazy=True,
 )
 lgrid.sink_parquet("grid.parquet")
 ```

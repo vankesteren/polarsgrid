@@ -1,6 +1,6 @@
 [project]
 name = "polarsgrid"
-version = "0.2.0"
+version = "0.3.0"
 description = "Expand grid functionality using Polars"
 readme = "README.md"
 authors = [
@@ -30,5 +30,5 @@ Issues = "https://github.com/vankesteren/polarsgrid/issues"
 line-length=100
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build"]
+build-backend = "uv_build"
