@@ -18,11 +18,11 @@ uv add polarsgrid
 
 ## Usage
 
-This package contains only a single function: `expand_grid()`.
+This package contains one main function: `expand_grid()`.
 
 ```py
 from polarsgrid import expand_grid
-expand_grid(a=[1, 2], b=["x", "y"])
+expand_grid(a=range(2), b=["x", "y"])
 ```
 ```
 shape: (4, 2)
@@ -31,10 +31,10 @@ shape: (4, 2)
 │ --- ┆ --- │
 │ i64 ┆ str │
 ╞═════╪═════╡
+│ 0   ┆ x   │
 │ 1   ┆ x   │
-│ 2   ┆ x   │
+│ 0   ┆ y   │
 │ 1   ┆ y   │
-│ 2   ┆ y   │
 └─────┴─────┘
 ```
 
@@ -45,9 +45,9 @@ Should the grid become too big to hold in memory, you can choose to return a laz
 ```py
 from polarsgrid import expand_grid_lazy
 lgrid = expand_grid_lazy(
-    sample_size=list(range(1000)), 
+    sample_size=range(1000), 
     condition=["a", "b", "c"], 
-    iteration=list(range(500)), 
+    iteration=range(500), 
 )
 lgrid.sink_parquet("grid.parquet")
 ```

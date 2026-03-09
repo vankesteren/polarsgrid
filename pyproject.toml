@@ -1,6 +1,6 @@
 [project]
 name = "polarsgrid"
-version = "0.3.0"
+version = "0.4.0"
 description = "Expand grid functionality using Polars"
 readme = "README.md"
 authors = [
@@ -32,3 +32,8 @@ line-length=100
 [build-system]
 requires = ["uv_build"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
