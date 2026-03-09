@@ -43,11 +43,13 @@ def expand_grid_lazy(*, _categorical=False, _row_id=False, **kwargs: Iterable) -
         │ 1   ┆ y   │
         └─────┴─────┘
     """
-
+    # Argument checking
     if _row_id and any(k == "row_id" for k in kwargs):
         raise ValueError("Keyword arguments are not allowed to be named 'row_id'")
     if not all([isinstance(v, Iterable) for v in kwargs.values()]):
         raise TypeError("All keyword arguments should be iterable (e.g., a list).")
+    
+    # Instantiate the LazyFrame with nested list columns
     ldf = pl.DataFrame({k: [list(v)] for k, v in kwargs.items()}).lazy()
 
     # explode (unnest_longer) factor columns
