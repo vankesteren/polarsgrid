@@ -17,7 +17,7 @@ jobs:
       - name: "Lint using ruff"
         uses: astral-sh/ruff-action@v3
   # check:
-  #   name: Check types
+  #   name: Check
   #   runs-on: "ubuntu-latest"
   #   steps:
   #     - name: "Checkout project"
@@ -29,7 +29,7 @@ jobs:
   #     - name: "Check types using ty"
   #       run: uvx ty check
   test:
-    name: Test project
+    name: Test
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout project"
@@ -41,7 +41,7 @@ jobs:
       - name: "Test project"
         run: uv run pytest
   build: 
-    name: Build package
+    name: Build
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout project"
