@@ -1,6 +1,6 @@
 # Polarsgrid
 
-[![Continuous integration](https://github.com/vankesteren/polarsgrid/actions/workflows/main.yml/badge.svg)](https://github.com/vankesteren/polarsgrid/actions/workflows/main.yml) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/polarsgrid)
+![PyPI - Version](https://img.shields.io/pypi/v/polarsgrid) [![CI](https://github.com/vankesteren/polarsgrid/actions/workflows/main.yml/badge.svg)](https://github.com/vankesteren/polarsgrid/actions/workflows/main.yml) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/polarsgrid)
 
 Tidyverse-style [`expand_grid()`](https://tidyr.tidyverse.org/reference/expand_grid.html) in a fast and efficient way using [Polars](https://pola.rs).
 
